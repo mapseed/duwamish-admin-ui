@@ -1,0 +1,34 @@
+{
+  "name": "duwamish-admin-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/*.js | tap-spec"
+  },
+  "browser": {
+    "request": "xhr"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartercleanup/duwamish-admin-ui.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/smartercleanup/duwamish-admin-ui/issues"
+  },
+  "homepage": "https://github.com/smartercleanup/duwamish-admin-ui#readme",
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "request": "^2.61.0",
+    "xhr": "^2.0.4"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "budo": "^4.2.1",
+    "envify": "^3.4.0",
+    "tap-spec": "^4.1.0",
+    "tape": "^4.2.0"
+  }
+}
