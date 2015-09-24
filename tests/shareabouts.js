@@ -20,6 +20,7 @@ test('log out', function (t) {
 
 test('try to get current user', function (t) {
   auth.currentUser({ username: 'admin', password: 'sodasoda' }, function (err, res) {
+    t.notOk(err)
     t.ok(res)
     t.end()
   })
@@ -45,7 +46,6 @@ test('get one dataset', function (t) {
 
 test('get places from example dataset', function (t) {
   places.list({ username: 'admin', slug: 'example' }, function (err, res) {
-    // console.log(err, res)
     t.notOk(err)
     t.ok(res)
     t.end()
