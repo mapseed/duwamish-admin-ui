@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tape tests/*.js | tap-spec"
+    "test": "tape tests/*.js | tap-spec",
+    "test-browser": "budo tests/shareabouts.js -- -t [ envify --NODE_ENV staging ]"
   },
   "browser": {
     "request": "xhr"
