@@ -93,15 +93,6 @@ test('get places from test dataset', function (t) {
   })
 })
 
-test('get a place', function (t) {
-  places.get({ username: USERNAME, slug: TEST_DATASET, placeId: '3269' }, function (err, res) {
-    console.log(err, res)
-    t.notOk(err)
-    t.ok(res)
-    t.end()
-  })
-})
-
 var examplePlaceId;
 test('post a place to the example dataset', function (t) {
   places.post({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET,
@@ -131,6 +122,15 @@ test('post a place to the example dataset', function (t) {
                 console.log("examplePlaceId:", examplePlaceId)
                 t.end()
               })
+})
+
+test('get a place', function (t) {
+  places.get({ username: USERNAME, slug: TEST_DATASET, placeId: examplePlaceId }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res)
+    t.end()
+  })
 })
 
 test('update our previously added place to the example dataset', function (t) {
