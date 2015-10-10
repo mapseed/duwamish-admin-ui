@@ -10,4 +10,15 @@ var config = {
   }
 }
 
-module.exports = config[process.env.NODE_ENV]
+// Read the .env file, but don't throw err if .env file is not found:
+var env = require('node-env-file')
+try {
+  env('.env', { overwrite: true })
+} catch (err) {
+  if (err.name !== 'TypeError' || err.message.lastIndexOf('Environment', 0) === -1) {
+    throw err
+  }
+}
+var environment = process.env.NODE_ENV ? process.env.NODE_ENV : "development"
+
+module.exports = config[environment]
