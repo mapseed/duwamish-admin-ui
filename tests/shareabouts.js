@@ -1,6 +1,6 @@
 var test = require('tape')
 var config = require('../config')
-var subset = require('../lib/json-subset')
+var subset = require('json-subset')
 var auth = require('../lib/shareabouts/auth')(config)
 var datasets = require('../lib/shareabouts/datasets')(config)
 var places = require('../lib/shareabouts/places')(config)
@@ -103,7 +103,7 @@ var placeBody = {
   "geometry": {
     "coordinates": [
         -122.5,
-      47.51951934150781
+      47.5195
     ],
     "type": "Point"
   },
