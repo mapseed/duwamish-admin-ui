@@ -15,16 +15,16 @@ var state = window.state = {
   data: []
 }
 
-var tableView = require('data-editor/table')()
-var mapView = require('data-editor/map')({
-  leaflet: {
+var views = {
+  grid: require('data-grid')(),
+  map: require('data-map')({
     zoom: 12,
     center: [47.545, -122.336],
     accessToken: 'pk.eyJ1Ijoic2V0aHZpbmNlbnQiLCJhIjoiSXZZXzZnUSJ9.Nr_zKa-4Ztcmc1Ypl0k5nw'
-  }
-})
+  })
+}
 
-mapView.addEventListener('load', function () {
+views.map.addEventListener('load', function () {
   if (!state.data.length && !state.geojson) {
     places.list({ username: 'smartercleanup', slug: 'duwamish' }, function (err, body) {
       body = JSON.parse(body)
@@ -41,29 +41,26 @@ mapView.addEventListener('load', function () {
   render(state)
 })
 
-render(state)
-
 function render (state) {
-  var view
-  if (state.view === 'map') {
-    view = mapView.render(state)
-  } else if (state.view === 'table') {
-    view = tableView.render(state.data)
-  }
-  var ui = h('div.editor-ui', [
-    h('div.editor-header', [
-      h('button#toggle', {
-        onclick: function (e) {
-          e.preventDefault()
-          if (state.view === 'map') {
-            state.view = 'table'
-          } else {
-            state.view = 'map'
-          }
-          render(state)
-        }
-      }, 'toggle')
-    ])
-  ])
+  var view = views[state.view].render(state)
   editor.render([ui, h('div.view-wrapper', [view])], state)
 }
+
+var viewButtons = []
+Object.keys(views).forEach(function (key) {
+  viewButtons.push(h('button.view-choice', {
+    onclick: function (e) {
+      e.preventDefault()
+      if (state.view !== key) {
+        state.view = key
+        render(state)
+      }
+    }
+  }, key))
+})
+
+var ui = h('div.editor-ui', [
+  h('div.editor-header', viewButtons)
+])
+
+render(state)

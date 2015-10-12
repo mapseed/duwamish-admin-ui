@@ -26,8 +26,12 @@
   "homepage": "https://github.com/smartercleanup/duwamish-admin-ui#readme",
   "dependencies": {
     "base-64": "^0.1.0",
+    "csskit": "^1.1.1",
     "data-editor": "editdata/data-editor",
     "data-format": "editdata/data-format",
+    "data-grid": "editdata/data-grid",
+    "data-map": "editdata/data-map",
+    "normalize.css": "^3.0.3",
     "request": "^2.61.0",
     "virtual-dom": "^2.1.1",
     "xhr": "^2.0.4"

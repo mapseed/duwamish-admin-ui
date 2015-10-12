@@ -1,9 +1,24 @@
-@import "data-editor";
+@import "normalize.css";
+@import "csskit";
+@import "data-grid";
 
-html, body {
+html,
+body {
+  font: 18px/1.5 'Source Sans Pro', 'Helvetica Neue', Helvetica, arial, sans-serif;
+  color: #444;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-weight: 300;
   width: 100%;
   height: 100%;
   margin: 0px;
+  padding: 0px;
+  background-color: #f8f8f6;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #app, #editor-wrapper, .view-wrapper, #map-container, #map {
@@ -27,4 +42,30 @@ html, body {
 .view-wrapper {
   position: fixed;
   top: 40px;
+}
+
+.editor-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #ccc;
+}
+
+.view-choice {
+  display: inline;
+  height: 39px;
+  line-height: 40px;
+  border-radius: 0px;
+  border: 0px;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+
+.view-choice:hover,
+.view-choice:focus {
+  border: 0px;
+  background-color: #efefef;
 }
