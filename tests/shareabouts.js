@@ -47,7 +47,6 @@ test('create a new test dataset', function (t) {
       "owner": TEST_HOST + USERNAME
     }
   }, function (err, res) {
-    console.log(err, res)
     t.notOk(err)
     t.ok(res)
     t.end()
@@ -56,7 +55,6 @@ test('create a new test dataset', function (t) {
 
 test('get all datasets', function (t) {
   datasets.list({ username: USERNAME, password: PASSWORD }, function (err, res) {
-    console.log(err, res)
     t.notOk(err)
     t.ok(res)
     t.end()
@@ -65,7 +63,6 @@ test('get all datasets', function (t) {
 
 test('get one dataset', function (t) {
   datasets.get({ slug: TEST_DATASET, username: USERNAME, password: PASSWORD }, function (err, res) {
-    console.log(err, res)
     t.notOk(err)
     t.ok(res)
     t.end()
@@ -88,7 +85,6 @@ test('Update our dataset to contain special permissions', function (t) {
 
 test('get places from test dataset', function (t) {
   places.list({ username: USERNAME, slug: TEST_DATASET }, function (err, res) {
-    console.log("res:", res)
     t.notOk(err)
     t.ok(res)
     t.end()
@@ -122,7 +118,6 @@ test('post a place to the example dataset', function (t) {
                 t.notOk(err)
                 t.ok(res)
                 examplePlaceId = res.id
-                console.log("examplePlaceId:", examplePlaceId)
                 t.end()
               })
 })
