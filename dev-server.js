@@ -9,6 +9,14 @@ var cors = Corsify({
   'Access-Control-Allow-Headers': 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization'
 })
 
-http.createServer(cors(function (req, res) {
+var server = http.createServer(cors(function (req, res) {
   proxy.web(req, res, { target: 'http://dev-api.heyduwamish.org/api/v2/' })
-})).listen(4242)
+}))
+
+server.on('error', function (err) {
+  console.log('\n\n\nERRORRRRRRR')
+  console.log(err)
+  console.log('ERRORRRRRRR\n\n\n')
+})
+
+server.listen(4242)

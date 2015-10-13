@@ -28,6 +28,7 @@ views.map.addEventListener('load', function () {
   if (!state.data.length && !state.geojson) {
     places.list({ username: 'smartercleanup', slug: 'duwamish' }, function (err, body) {
       body = JSON.parse(body)
+      console.log(body)
       if (err) console.error(err)
       var formatted = formatter.format(body.features)
       state.data = formatted.data
