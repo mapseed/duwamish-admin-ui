@@ -260,10 +260,88 @@ test('DELETE a comment', function (t) {
 })
 
 /*
+ * POST a support to a place
+ */
+var supportBody = {
+  user_token: "user:456",
+  visible: true
+}
+var supportId
+test('POST a support', function (t) {
+  submissions.post({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'support', body: supportBody }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res)
+    supportId = res.id
+    t.end()
+  })
+})
+
+/*
+ * GET a support from a place
+ */
+// RETURNED SUPPORT EXAMPLE:
+// {
+//   "user_token": "user:789",
+//   "visible": true,
+//   "updated_datetime": "2015-10-14T07:29:57.460Z",
+//   "created_datetime": "2015-10-14T07:29:57.456Z",
+//   "place": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example\/places\/381",
+//   "set": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example\/places\/381\/support",
+//   "dataset": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example",
+//   "url": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example\/places\/381\/support\/383",
+//   "submitter": {
+//     "provider_type": "",
+//     "id": 7,
+//     "avatar_url": "",
+//     "name": "",
+//     "provider_id": null,
+//     "username": "admin"
+//   },
+//   "attachments": [],
+//   "id": 383
+// }
+// TODO: why does `submissions.get` return `res` as string but `submissions.put` returns `res` as object?
+test('GET a support', function (t) {
+  submissions.get({ username: USERNAME, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'support', submissionId: supportId }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res)
+    t.ok(subset(supportBody, JSON.parse(res)))
+    t.end()
+  })
+})
+
+/*
+ * PUT a support to a place
+ */
+supportBody.user_token = "user:789"
+test('PUT a support', function (t) {
+  submissions.put({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'support', submissionId: supportId, body: supportBody }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res)
+    t.ok(subset(supportBody, res))
+    t.end()
+  })
+})
+
+/*
+ * DELETE a support from a place
+ */
+test('DELETE a support', function (t) {
+  submissions.delete({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'support', submissionId: supportId }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res === '')
+    t.end()
+  })
+})
+
+/*
  * DELETE our test place
  */
-
-test('delete an existing place to the example dataset', function (t) {
+test('DELETE an existing place to the example dataset', function (t) {
   places.delete({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId }, function (err, res) {
     console.log(err, res)
     t.notOk(err)
