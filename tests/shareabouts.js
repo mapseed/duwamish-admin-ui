@@ -4,6 +4,7 @@ var subset = require('json-subset')
 var auth = require('../lib/shareabouts/auth')(config)
 var datasets = require('../lib/shareabouts/datasets')(config)
 var places = require('../lib/shareabouts/places')(config)
+var submissions = require('../lib/shareabouts/submissions')(config)
 
 // Our dataset for testing, which should not already exist
 var TEST_DATASET = config.dataset || 'example'
@@ -158,6 +159,72 @@ test('get a place', function (t) {
     t.end()
   })
 })
+
+/*
+ * POST a comment to a place
+ */
+var commentBody = {
+  comment: "hey this is a commment!",
+  submitter_name: "joe blow",
+  user_token: "user:123",
+  visible: true
+}
+var commentId
+test('POST a comment', function (t) {
+  submissions.post({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'comments', body: commentBody }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res)
+    commentId = res.id
+    t.end()
+  })
+})
+
+
+/*
+ * GET a comment from a place
+ */
+// TODO: why does `submission.get` return `res` as string but `submission.put` returns `res` as object?
+test('GET a comment', function (t) {
+  submissions.get({ username: USERNAME, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'comments', submissionId: commentId }, function (err, res) {
+    console.log(err, res)
+    res2 = res
+    t.notOk(err)
+    t.ok(res)
+    t.ok(subset(commentBody, JSON.parse(res)))
+    t.end()
+  })
+})
+
+/*
+ * PUT a comment to a place
+ */
+commentBody.comment = "This is an updated comment!"
+test('PUT a comment', function (t) {
+  submissions.put({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'comments', submissionId: commentId, body: commentBody }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res)
+    t.ok(subset(commentBody, res))
+    t.end()
+  })
+})
+
+/*
+ * DELETE a comment from a place
+ */
+test('DELETE a comment', function (t) {
+  submissions.delete({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'comments', submissionId: commentId }, function (err, res) {
+    console.log(err, res)
+    t.notOk(err)
+    t.ok(res === '')
+    t.end()
+  })
+})
+
+/*
+ * DELETE our test place
+ */
 
 test('delete an existing place to the example dataset', function (t) {
   places.delete({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId }, function (err, res) {
