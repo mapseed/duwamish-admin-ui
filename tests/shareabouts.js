@@ -12,6 +12,9 @@ var TEST_HOST = config.host || 'http://127.0.0.1:8001/api/v2/'
 var USERNAME = config.username || 'admin'
 var PASSWORD = config.password || 'sodasoda'
 
+/*
+ * LOG IN
+ */
 // Assume that we already have a superuser names USERNAME with password 'sodasoda'
 test('log in using username & password', function (t) {
   auth.logIn({ username: USERNAME, password: PASSWORD }, function (err, res) {
@@ -20,6 +23,9 @@ test('log in using username & password', function (t) {
   })
 })
 
+/*
+ * LOG OUT
+ */
 test('log out', function (t) {
   auth.logOut({ username: USERNAME, password: PASSWORD }, function (err, res) {
     t.notOk(err)
@@ -27,7 +33,10 @@ test('log out', function (t) {
   })
 })
 
-test('try to get current user', function (t) {
+/*
+ * GET current user
+ */
+test('GET current user', function (t) {
   auth.currentUser({ username: USERNAME, password: PASSWORD }, function (err, res) {
     t.notOk(err)
     t.ok(res)
@@ -35,6 +44,9 @@ test('try to get current user', function (t) {
   })
 })
 
+/*
+ * POST new dataset
+ */
 // TODO: Only create the new test dataset if it doesn't already exist
 // and/or delete the test dataset if the test fails
 // (helpful if the test fails after we create the dataset)
@@ -54,6 +66,9 @@ test('create a new test dataset', function (t) {
   })
 })
 
+/*
+ * GET all datasets
+ */
 test('get all datasets', function (t) {
   datasets.list({ username: USERNAME, password: PASSWORD }, function (err, res) {
     t.notOk(err)
@@ -62,6 +77,9 @@ test('get all datasets', function (t) {
   })
 })
 
+/*
+ * GET one dataset
+ */
 test('get one dataset', function (t) {
   datasets.get({ slug: TEST_DATASET, username: USERNAME, password: PASSWORD }, function (err, res) {
     t.notOk(err)
@@ -70,6 +88,9 @@ test('get one dataset', function (t) {
   })
 })
 
+/*
+ * PUT our dataset
+ */
 test('Update our dataset to contain special permissions', function (t) {
   datasets.put({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET,
                  body: {
@@ -84,6 +105,9 @@ test('Update our dataset to contain special permissions', function (t) {
                })
 })
 
+/*
+ * GET all places from dataset
+ */
 test('get places from test dataset', function (t) {
   places.list({ username: USERNAME, slug: TEST_DATASET }, function (err, res) {
     t.notOk(err)
@@ -92,6 +116,9 @@ test('get places from test dataset', function (t) {
   })
 })
 
+/*
+ * POST a new place to our dataset
+ */
 var placeBody = {
   "properties": {
     "description": "my description is here",
@@ -123,8 +150,10 @@ test('post a place to the example dataset', function (t) {
               })
 })
 
-// Checking to ensure that our place is the same
-// NOTE: We are using JSON.parse because Shareabouts API (or our request module) is not returning valid JSON
+/*
+ * GET our place
+ */
+// TODO: why does `places.get` return `res` as string but `places.put` returns `res` as object?
 test('get a place', function (t) {
   places.getPrivate({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId }, function (err, res) {
     console.log(err, res)
@@ -135,22 +164,30 @@ test('get a place', function (t) {
   })
 })
 
+/*
+ * PUT our existing place
+ */
 placeBody['properties'].description = "I am changing my description"
-test('update our previously added place to the example dataset', function (t) {
+test('PUT our existing place', function (t) {
   places.put({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId,
                body: placeBody
              }, function (err, res) {
                console.log(err, res)
                t.notOk(err)
                t.ok(res)
+               // this fails because `res` does not include our private fields
+               // t.ok(subset(placeBody, res))
                t.end()
              })
 })
 
 /*
+ * GET our updated place
+ */
+/*
  * Checking whether our update was successful
  */
-test('get a place', function (t) {
+test('GET a place', function (t) {
   places.getPrivate({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET, placeId: examplePlaceId }, function (err, res) {
     console.log(err, res)
     t.notOk(err)
@@ -235,6 +272,9 @@ test('delete an existing place to the example dataset', function (t) {
   })
 })
 
+/*
+ * DELETE our test dataset
+ */
 test('delete our test dataset', function (t) {
   datasets.delete({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET }, function (err, res) {
     console.log(err, res)
