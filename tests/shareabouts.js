@@ -16,7 +16,7 @@ var PASSWORD = config.password || 'sodasoda'
  * LOG IN
  */
 // Assume that we already have a superuser names USERNAME with password 'sodasoda'
-test('log in using username & password', function (t) {
+test('LOG IN using username & password', function (t) {
   auth.logIn({ username: USERNAME, password: PASSWORD }, function (err, res) {
     t.ok(res)
     t.end()
@@ -26,7 +26,7 @@ test('log in using username & password', function (t) {
 /*
  * LOG OUT
  */
-test('log out', function (t) {
+test('LOG OUT', function (t) {
   auth.logOut({ username: USERNAME, password: PASSWORD }, function (err, res) {
     t.notOk(err)
     t.end()
@@ -50,7 +50,7 @@ test('GET current user', function (t) {
 // TODO: Only create the new test dataset if it doesn't already exist
 // and/or delete the test dataset if the test fails
 // (helpful if the test fails after we create the dataset)
-test('create a new test dataset', function (t) {
+test('POST a new test dataset', function (t) {
   datasets.post({
     username: USERNAME,
     password: PASSWORD,
@@ -67,9 +67,9 @@ test('create a new test dataset', function (t) {
 })
 
 /*
- * GET all datasets
+ * GET ALL datasets
  */
-test('get all datasets', function (t) {
+test('GET ALL datasets', function (t) {
   datasets.list({ username: USERNAME, password: PASSWORD }, function (err, res) {
     t.notOk(err)
     t.ok(res)
@@ -221,11 +221,33 @@ test('POST a comment', function (t) {
 /*
  * GET a comment from a place
  */
+// RETURNED COMMENT EXAMPLE:
+// {
+//   "submitter_name": "joe blow",
+//   "user_token": "user:123",
+//   "comment": "hey this is a commment!",
+//   "visible": true,
+//   "updated_datetime": "2015-10-14T06:33:23.855Z",
+//   "created_datetime": "2015-10-14T06:33:23.843Z",
+//   "place": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example\/places\/364",
+//   "set": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example\/places\/364\/comments",
+//   "dataset": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example",
+//   "url": "http:\/\/dev-api.heyduwamish.org:8009\/api\/v2\/admin\/datasets\/example\/places\/364\/comments\/365",
+//   "submitter": {
+//     "provider_type": "",
+//     "id": 7,
+//     "avatar_url": "",
+//     "name": "",
+//     "provider_id": null,
+//     "username": "admin"
+//   },
+//   "attachments": [],
+//   "id": 365
+// }
 // TODO: why does `submission.get` return `res` as string but `submission.put` returns `res` as object?
 test('GET a comment', function (t) {
   submissions.get({ username: USERNAME, slug: TEST_DATASET, placeId: examplePlaceId, submissionSetName: 'comments', submissionId: commentId }, function (err, res) {
     console.log(err, res)
-    res2 = res
     t.notOk(err)
     t.ok(res)
     t.ok(subset(commentBody, JSON.parse(res)))
@@ -353,7 +375,7 @@ test('DELETE an existing place to the example dataset', function (t) {
 /*
  * DELETE our test dataset
  */
-test('delete our test dataset', function (t) {
+test('DELETE our test dataset', function (t) {
   datasets.delete({ username: USERNAME, password: PASSWORD, slug: TEST_DATASET }, function (err, res) {
     console.log(err, res)
     t.notOk(err)
