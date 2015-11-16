@@ -32,10 +32,11 @@
     "data-format": "editdata/data-format",
     "data-grid": "editdata/data-grid",
     "data-map": "editdata/data-map",
-    "normalize.css": "^3.0.3",
     "extend": "^3.0.0",
     "node-env-file": "^0.1.7",
+    "normalize.css": "^3.0.3",
     "request": "^2.61.0",
+    "shareabouts-api-client": "github:smartercleanup/shareabouts-api-client",
     "virtual-dom": "^2.1.1",
     "xhr": "^2.0.4"
   },

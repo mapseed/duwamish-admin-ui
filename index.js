@@ -1,10 +1,8 @@
 var h = require('virtual-dom/h')
 var DataEditor = require('data-editor')
 var formatter = require('data-format')()
-
-var places = require('./lib/shareabouts/places')({
-  host: 'http://127.0.0.1:4242/'
-})
+var config = require('./config')
+var places = require('shareabouts-api-client/places')(config)
 
 var appEl = document.getElementById('app')
 var editor = DataEditor(appEl, {})
