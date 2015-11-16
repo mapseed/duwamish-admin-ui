@@ -28,6 +28,7 @@
     "base-64": "^0.1.0",
     "csskit": "^1.1.1",
     "data-editor": "editdata/data-editor",
+    "data-fields": "^2.0.1",
     "data-format": "editdata/data-format",
     "data-grid": "editdata/data-grid",
     "data-map": "editdata/data-map",
