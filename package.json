@@ -7,7 +7,7 @@
     "test": "tape tests/*.js | tap-spec",
     "test-browser": "budo tests/shareabouts.js -- -t [ envify --NODE_ENV staging ]",
     "bundle-css": "sheetify style.css > public/bundle.css",
-    "bundle-js": "browserify index.js -o bundle.js",
+    "bundle-js": "browserify index.js -o public/bundle.js",
     "bundle": "npm run bundle-css && npm run bundle-js",
     "start": "budo index.js:public/bundle.js --live --onupdate 'npm run bundle-css'"
   },
