@@ -11,9 +11,6 @@
     "bundle": "npm run bundle-css && npm run bundle-js",
     "start": "budo index.js:public/bundle.js --live --onupdate 'npm run bundle-css'"
   },
-  "browser": {
-    "request": "xhr"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smartercleanup/duwamish-admin-ui.git"
@@ -25,29 +22,31 @@
   },
   "homepage": "https://github.com/smartercleanup/duwamish-admin-ui#readme",
   "dependencies": {
-    "base-64": "^0.1.0",
+    "basscss-grid": "^1.0.3",
+    "catch-links": "^2.0.0",
+    "clone": "^1.0.2",
+    "component-emitter": "^1.2.0",
     "csskit": "^1.1.1",
     "data-editor": "editdata/data-editor",
     "data-fields": "^2.0.1",
-    "data-format": "editdata/data-format",
     "data-grid": "editdata/data-grid",
     "data-map": "editdata/data-map",
-    "extend": "^3.0.0",
+    "history-state": "^1.0.0",
     "node-env-file": "^0.1.7",
     "normalize.css": "^3.0.3",
-    "request": "^2.61.0",
+    "pathname-match": "^1.1.0",
+    "query-string": "^3.0.0",
+    "redux": "^3.0.4",
     "shareabouts-api-client": "github:smartercleanup/shareabouts-api-client",
     "virtual-dom": "^2.1.1",
-    "xhr": "^2.0.4"
+    "virtual-raf": "^2.0.3",
+    "wayfarer": "^5.0.1"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
     "budo": "^5.1.0",
-    "corsify": "^2.1.0",
+    "cssnext": "^1.8.4",
     "envify": "^3.4.0",
-    "http-proxy": "^1.11.2",
-    "sheetify": "^2.0.3",
-    "json-subset": "^1.0.0",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0"
   }
