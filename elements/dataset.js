@@ -24,20 +24,11 @@ module.exports = function (h) {
   })
 
   dataset.render = function dataset_render (state) {
-    if (!state.dataset) {
-      state.dataset = {
-        key: null,
-        metadata: {},
-        properties: {},
-        data: []
-      }
-    }
-
+    var dataset = state.activeDataset
     var wrapper = 'div.view-wrapper' + (state.activeRow ? '.card-open' : '.card-closed')
-    var gridTree = state.dataset.data ? grid.render(state.dataset) : null
+    var gridTree = dataset.data ? grid.render(dataset) : null
 
     return h(wrapper, [
-      menu.render(state),
       gridTree,
       form.render(state)
     ])

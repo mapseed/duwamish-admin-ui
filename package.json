@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "tape tests/*.js | tap-spec",
-    "test-browser": "budo tests/shareabouts.js -- -t [ envify --NODE_ENV staging ]",
-    "bundle-css": "sheetify style.css > public/bundle.css",
+    "test-browser": "budo tests/index.js -- -t [ envify --NODE_ENV staging ]",
+    "bundle-css": "sheetify -u sheetify-cssnext style.css > public/bundle.css",
     "bundle-js": "browserify index.js -o public/bundle.js",
     "bundle": "npm run bundle-css && npm run bundle-js",
-    "start": "budo index.js:public/bundle.js --live --onupdate 'npm run bundle-css'"
+    "start": "budo index.js:public/bundle.js --pushstate --live --onupdate 'npm run bundle-css' -- -t [ envify --NODE_ENV development ]"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "csskit": "^1.1.1",
     "data-editor": "editdata/data-editor",
     "data-fields": "^2.0.1",
+    "data-form": "github:editdata/data-form",
     "data-grid": "editdata/data-grid",
     "data-map": "editdata/data-map",
     "history-state": "^1.0.0",
@@ -40,13 +41,15 @@
     "shareabouts-api-client": "github:smartercleanup/shareabouts-api-client",
     "virtual-dom": "^2.1.1",
     "virtual-raf": "^2.0.3",
-    "wayfarer": "^5.0.1"
+    "wayfarer": "^5.0.1",
+    "xtend": "^4.0.1"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
     "budo": "^5.1.0",
-    "cssnext": "^1.8.4",
     "envify": "^3.4.0",
+    "sheetify": "^3.1.0",
+    "sheetify-cssnext": "^1.0.0",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0"
   }
